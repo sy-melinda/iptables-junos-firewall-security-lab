@@ -35,3 +35,43 @@ The purpose of the lab was to understand how firewalls enforce least-privilege a
 - Juniper Junos
 - Juniper SRX firewall
 - Command-line interface
+
+---
+
+## 1. Initial Ruleset and Default-Deny Configuration
+
+### Examining the Initial Ruleset
+
+The existing Linux firewall configuration was inspected before making any changes. The `iptables` ruleset contains three principal built-in chains:
+
+- `INPUT` controls traffic entering the system.
+- `OUTPUT` controls traffic leaving the system.
+- `FORWARD` controls traffic routed through the system.
+
+![Initial iptables ruleset](assets/screenshots/01-iptables-initial-ruleset.png)
+
+**Observation:** The initial ruleset used an `ACCEPT` policy and did not contain restrictive filtering rules. This meant that traffic was permitted unless a rule explicitly blocked it.
+
+### Applying a Default-Deny Policy
+
+The default policies for the `INPUT`, `OUTPUT` and `FORWARD` chains were changed to `DROP`. Rules were then added to permit the HTTP and HTTPS services required by the lab.
+
+![Default DROP and HTTP/HTTPS rules](assets/screenshots/02-iptables-default-drop-http-https-rules.png)
+
+**Observation:** Changing the default policies to `DROP` caused traffic to be denied unless it matched and explicit allow rule.
+
+**Result:** The firewall moved from a permissive configuration to a default-deny security model while retaining access for selected web services.
+
+### Security Analysis 
+
+A default-deny policy follows the principle of least privilege. Instead of allowing all traffic and attempting to identify every possible threat, the firewall permits only the traffic required for legitimate operation.
+
+This approach provides several security benefits:
+
+- Unnecessary network services are inaccessible by default.
+- New services are not automatically exposed.
+- Administrators must explicitly document permitted traffic.
+- The attack surface of the system is reduced.
+- Unauthorized inbound, outbound and forwarded traffic can be restricted.
+
+However, default-deny policies must be implemented carefully. Required services, management access and essential system traffic should be identified before restrictive policies are applied to avoid accidently losing access to the system.
