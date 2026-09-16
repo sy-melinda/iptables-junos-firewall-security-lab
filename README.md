@@ -75,3 +75,47 @@ This approach provides several security benefits:
 - Unauthorized inbound, outbound and forwarded traffic can be restricted.
 
 However, default-deny policies must be implemented carefully. Required services, management access and essential system traffic should be identified before restrictive policies are applied to avoid accidently losing access to the system.
+
+---
+
+## 2. ICMP Access Control and Validation
+
+### Testing the Default-Deny Policy
+
+After the default firewall policies were changed to `DROP`, an ICMP connectivity test was performed between the designated server and client systems.
+
+![Server ping blocked](assets/screenshots/03-server-ping-blocked.png)
+
+**Observation:** The ping did not receive a response because the firewall's default-deny configuration blocked traffic that did not match an explicit allow rule.
+
+### Adding an ICMP Access Rule
+
+A specific `iptables` rule was added to permit traffic associated with the authorized system while leaving the restrictive default policies in place.
+
+![ICMP allow rule](assets/screenshots/04-icmp-allow-rule.png)
+
+**Observation:** The rule permitted communication for the designated address rather than allowing ICMP traffic from every system.
+
+### Verifying Authorized Connectivity
+
+The ping test was repeated after the new rule was applied.
+
+![Successful server ping](assets/screenshots/05-server-ping-success.png)
+
+**Result:** The authorized system successfully received ICMP replies, confirming that the allow rule was functioning as intended.
+
+### Testing Unauthorized Connectivity
+
+A separate ping test was initiated from the attacker virtual machine.
+
+![Attacker ping blocked](assets/screenshots/06-attacker-ping-blocked.png)
+
+**Result:** The attacker system did not receive a response. This demonstrated that the firewall allowed the designated communication while continuing to block traffic from an unauthorized source.
+
+### Verifying the Firewall Ruleset
+
+The active `iptables` configuration was displayed to confirm that the ICMP-related access rule and default policies were present.
+
+
+
+
