@@ -178,6 +178,42 @@ Recommended controls include:
 
 This experiment also demonstrates the importance of testing firewall rules after implementation. A rule may appear correct in the configuration but should be validated through an authorized connection test.
 
+---
+
+## 4. Firewall Rule Management and Deletion
+
+### Displaying Numbered Rules
+
+The active `iptables` rules were displayed with line numbers. Numbered output makes it easier to identify and manage individual rules within a chain.
+
+![Numbered iptables ruleset](assets/screenshots/11-iptables-numbered-ruleset.png)
+
+**Observation:** Each rule in the `INPUT` chain was assigned a line number, allowing a specific rule to be selected for deletion.
+
+### Deleting a Firewall Rule
+
+Rule number 2 was removed from the `INPUT` chain. The numbered ruleset was then displayed again to verify the change.
+
+![Firewall rule deletion verification](assets/screenshots/12-iptables-rule-deletion-verification.png)
+
+**Result:** The second rule was no longer present, confirming that it had been successfully deleted. The remaining rules were renumbered automatically.
+
+### Security Analysis
+
+Firewall rules should be reviewed and maintained throughout their lifecycle. Obsolete, duplicated or overly broad rules can weaken security and make the ruleset difficult to understand.
+
+Effective firewall-rule management includes:
+
+- Displaying rules with line numbers before making changes.
+- Confirming that the correct chain and rule were selected.
+- Documenting the purpose of each rule.
+- Removing temporary access when it is no longer required.
+- Reviewing rules for duplication or excessive permissions.
+- Verifying the rulset after every change.
+- Testing both permitted and denied traffic after modification.
+
+Deleting rules by line number requires care because rule numbers may change whenever another rule is inserted or removed. Administrators should always review the current rulset immediately before performing the deletion.
+
 
 
 
