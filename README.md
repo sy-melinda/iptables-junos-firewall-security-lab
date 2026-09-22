@@ -116,6 +116,24 @@ A separate ping test was initiated from the attacker virtual machine.
 
 The active `iptables` configuration was displayed to confirm that the ICMP-related access rule and default policies were present.
 
+![ICMP rule verification](assets/screenshots/07-iptables-icmp-rule-verification.png)
+
+**Observation:** The displayed ruleset provided evidence that access was controlled through explicit rules rather than a broadly permissive policy.
+
+### Security Analysis
+
+This experiment demonstrates selective access control. A firewall rule should permit only the sources, destinations and services required for legitimate operation.
+
+The results demonstrate several defensive principles:
+
+- Default-deny policies block traffic that has not been explicitly authorized.
+- Source-specific rules can restrict access to designated systems.
+- Connectivity tests verify whether a rule produces the intended result.
+- Negative testing confirms that unauthorized systems remain blocked.
+- Reviewing the active ruleset helps identify configuration mistakes.
+
+Testing both permitted and denied traffic is important. A successful authorized connection alone does not prove that a firewall is secure; administrators should also verify that unauthorized sources cannot obtain the same access.
+
 
 
 
