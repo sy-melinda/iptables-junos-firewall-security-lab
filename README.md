@@ -263,6 +263,15 @@ Potential security benefits include:
 
 Authentication should be combined with strong credential policies, encrypted management protocols, limited administrative privileges and appropriate logging. Authentication data, password hashes and infrastructure details should also be protected when configurations are documented or shared publicly.
 
+--- 
+
+## Key Findings
+
+| Area | Finding | Security significance |
+| --- | --- | --- |
+| Initial firewall state | The initial chains used permissive `ACCEPT` policies | Traffic was allowed unless explicitly blocked |
+| Default-deny configuration | The main chains were changed to `DROP` | Unauthorized traffic was denied by default |
+| Service Access | Explicit rules permitted required HTTP and HTTPS traffic | Necessary services remained available without broadly permitting traffic |
 
 
 
