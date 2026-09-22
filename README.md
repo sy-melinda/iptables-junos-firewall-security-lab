@@ -134,6 +134,50 @@ The results demonstrate several defensive principles:
 
 Testing both permitted and denied traffic is important. A successful authorized connection alone does not prove that a firewall is secure; administrators should also verify that unauthorized sources cannot obtain the same access.
 
+---
+
+## 3. SSH Access Control and Validation
+
+### Testing SSH Before Adding Rules
+
+An SSH connection attempt was initiated from the designated attacker virtual machine while the restrictive `iptables` policies were active.
+
+![SSH connection attempt](assets/screenshots/08-attacker-ssh-connection-attempt.png)
+
+**Observation:** The connection could not proceed because the firewall did not yet contain rules permitting the required SSH traffic.
+
+### Adding SSH Firewall Rules
+
+Specific `INPUT` and `OUTPUT` rules were added to permit SSH traffic between the designated systems.
+
+![SSH allow rules](assets/screenshots/09-iptables-ssh-allow-rules.png)
+
+**Observation:** The new rules permitted TCP traffic associated with the SSH service while leaving the default-deny policies in place.
+
+### Verifying SSH Connectivity
+
+The SSH connection was attempted again after the firewall rules had been applied.
+
+![Successful SSH connection](assets/screenshots/10-attacker-ssh-connection-success.png)
+
+**Result:** The remote login succeeded, confirming that the SSH rules permitted the intended connection.
+
+### Security Analysis
+
+SSH provides encrypted remote administration, but exposing the service without restrictions can create opportunities for credential attacks and unauthorized access. Firewall rules should therefore limit SSH access to the systems and users that require it.
+
+Recommended controls include:
+
+- Permitting SSH only from trusted source addresses.
+- Using key-based authentication instead of passwords.
+- Disabling direct root login.
+- Applying multi-facctor authentication where available.
+- Monitoring unsuccessful authentication attempts.
+- Removing SSH access when it is not longer required.
+- Combining firewall restrictions with secure SSH server configuration.
+
+This experiment also demonstrates the importance of testing firewall rules after implementation. A rule may appear correct in the configuration but should be validated through an authorized connection test.
+
 
 
 
