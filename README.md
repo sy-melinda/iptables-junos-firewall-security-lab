@@ -272,6 +272,50 @@ Authentication should be combined with strong credential policies, encrypted man
 | Initial firewall state | The initial chains used permissive `ACCEPT` policies | Traffic was allowed unless explicitly blocked |
 | Default-deny configuration | The main chains were changed to `DROP` | Unauthorized traffic was denied by default |
 | Service Access | Explicit rules permitted required HTTP and HTTPS traffic | Necessary services remained available without broadly permitting traffic |
+| ICMP control | The authorized system could communicate while the attacker system remained blocked | Source-specific access rules enforced selective connectivity |
+| SSH access | SSH succeeded only after the required firewall rules were added | Remote administration could be enabled without removing the default-deny policy |
+| Rule management | A numbered `INPUT` rule was identified and deleted | Firewall rules can be reviewed, modified and verified throughout their lifecycle |
+| Junos access profile | User and address-assignment settings were defined through an access profile | Authentication configuration could be managed centrally |
+| Firewall authentication | Pass-through authentication was applied through a security policy | Access decisions incorporated user identity as well as network attributes |
 
+## Defensive Recommendations
 
+- Use default-deny firewall policies wherever operationally appropriate.
+- Permit only the protocols, ports, sources and destinations required for legitimate activity.
+- Restrict SSH access to trusted management systems.
+- Use SSH keys and multi-factor authentication where supported.
+- Review firewall rules regularly for obsolete or excessive permissions.
+- Document the purpsoe and owner of every firewall rule.
+- Test both permitted and denied traffic after configuration changes.
+- Monitor rejected connections and repeated authentication failures.
+- Protect firewall credentials, password hashes and configuration backups.
+- Use encrypted protocols for firewall administration.
+- Apply least privilege to firewall administrator accounts.
+- Maintain a rollback plan before making major policy changes.
 
+## Skills Demonstrated
+
+- Linux firewall administration with `iptables`
+- Configuration of `INPUT`, `OUTPUT` and `FORWARD` policies
+- Implementations of a default-deny security model
+- HTTP, HTTPS, ICMP and SSH traffic control
+- Source-specific firewall rules
+- Positive and negative connectivity testing
+- Firewall ruleset inspection and verification
+- Numbered-rule management and deletion
+- Juniper Junos command-line configuration
+- Access-profile configuration
+- Pass-through firewall authentication
+- Security-policy configuration
+- Credential and infrastructure-data redaction
+- Security analysis and technical documentation
+
+## Conclusion
+
+This lab demonstrated how Linux and Junos firewalls can be used to control network access at both the traffic and user levels.
+
+The `iptables` exercises showed how default-deny policies, explicit allow rules and systematic testing can restrict unauthorized traffic while preserving required services. The Junos exercies extended this approach by incorporating access profiles and firewall user authentication into a security policy.
+
+The results highlight that effective firewall security requires more than creating rules. Administrators must also validate expected behavior, confimr that unauthorized traffic remains blocked, review configurations regularly and protect authentication information.
+
+> **Disclaimer:** This repository documents authorized academic work completed in an isolated lab environment. The configurations are presented for educational and defensive purposes only.
