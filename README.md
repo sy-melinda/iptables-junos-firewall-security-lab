@@ -214,6 +214,55 @@ Effective firewall-rule management includes:
 
 Deleting rules by line number requires care because rule numbers may change whenever another rule is inserted or removed. Administrators should always review the current rulset immediately before performing the deletion.
 
+---
+
+## 5. Junos Firewall User Authentication
+
+### Authentication Technique
+
+Firewall user authentication requries a user to verify their identity before the firewall permits access to protected network resources.
+
+Unlike rules based only on IP addresses and ports, user authentication allows access decisions to include identity. This provides greater control when several users or devices may connect through the same network.
+
+### Configuring the Access Profile
+
+A Junos access profile was created to define the client authentication information and address-assignment settings used in the lab.
+
+![Junos access profile configuration](assets/screenshots/13-junos-access-profile-configuration.png)
+
+**Observation:** The configuration displayed the access profile, client entries and address-assignment pool. Password values and network-range details were redacted before publication.
+
+### Configuring Pass-Through Authentication
+
+The access profile was associated with pass-through authentication. A successful-login banner was also configured to provide feedback after authentication.
+
+![Junos pass-through authentication](assets/screenshots/14-junos-pass-through-authentication-banner.png)
+
+**Observation:** The firewall-authentication configuration referenced the designated access profile and included the configured login-success banner.
+
+### Applying Authentication to a Security Policy
+
+Firewall authentication was added to the action of a Junos security policy.
+
+![Junos firewall authentication policy](assets/screenshots/15-junos-firewall-authentication-policy.png)
+
+**Result:** Traffic matching the policy was associated with the configured firewall-authentication process before access was permitted.
+
+### Security Analysis
+
+Firewall authentication strengthens access control by requiring identity verification in addition to network-level policy matching.
+
+Potential security benefits include:
+
+- Restricting protected resources to authenticated users.
+- Reducing reliance on source IP addresses alone.
+- Supporting user-based policy enforcement.
+- Limiting unuathorized access to sensitive services.
+- Improving accoutability for network access.
+- Providing an additional control against spoofing and impersonation.
+
+Authentication should be combined with strong credential policies, encrypted management protocols, limited administrative privileges and appropriate logging. Authentication data, password hashes and infrastructure details should also be protected when configurations are documented or shared publicly.
+
 
 
 
